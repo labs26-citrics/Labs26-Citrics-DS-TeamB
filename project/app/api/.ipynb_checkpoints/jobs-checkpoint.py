@@ -11,19 +11,8 @@ DATA_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "..","data", "job_
 
 @router.get('/jobs/{city_id}')
 async def pop_to_dict(city_id: int):
-
     """
-
-    Pull job industry data for specific city_id 
-
-    ### Query Parameters: 
-
-    - `city_id`: [city_id], unique numeric mapping (ex: 0 returns Anchorage, AK)
-
-    ### Response
-
-    Dictionary object 
-
+    Job Industry insights 
     """
     rt_dict = {}
     rt_data_dict = {}
@@ -76,107 +65,66 @@ async def pop_to_dict(city_id: int):
 
 def cityjobsviz(df, city_id , n_industries = 10):
 
-    """
-
-    Visualize top job industries of a given city
-
-    ### Query Parameters: 
-
-    - `city_id`: [city_id], unique numeric mapping (ex: 0 returns Anchorage, AK) 
-
-    ### Response
-
-    JSON string to render with react-plotly.js
-
-    """      
-
-    df = pd.read_csv(DATA_FILEPATH, encoding='utf-8')
-    
-    df_city_top10 = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[1:n_industries + 1]
-    df_city_other = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[n_industries + 1:]
+  df = pd.read_csv(DATA_FILEPATH, encoding='utf-8')
+  df_city_top10 = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[1:n_industries + 1]
+  df_city_other = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[n_industries + 1:]
 
 
-    top_10_labels = df_city_top10["Job Sector"]
-    top_10_values = df_city_top10["Job Sector Percentage"]
+  top_10_labels = df_city_top10["Job Sector"]
+  top_10_values = df_city_top10["Job Sector Percentage"]
 
-    df_top10_aggregate = pd.DataFrame({"Job Sector": top_10_labels,
-                                        "Job Sector Percentage": top_10_values})
+  df_top10_aggregate = pd.DataFrame({"Job Sector": top_10_labels,
+                                     "Job Sector Percentage": top_10_values})
+  
+  df_city_other = pd.DataFrame({"Job Sector": ["Other"],
+                                "Job Sector Percentage": [100 - sum(top_10_values)]})
 
-    df_city_other = pd.DataFrame({"Job Sector": ["Other"],
-                                  "Job Sector Percentage": [100 - sum(top_10_values)]})
+  df_combined = pd.concat([df_top10_aggregate, df_city_other])
 
-    df_combined = pd.concat([df_top10_aggregate, df_city_other])
+  fig = go.Figure(data=[go.Pie(labels=df_combined["Job Sector"], values=df_combined["Job Sector Percentage"], textinfo="label+percent", hole=.3)])
+  fig.update_layout(margin=dict(l=20, r=20, t=20, b=20))
 
-    fig = go.Figure(data=[go.Pie(labels=df_combined["Job Sector"], values=df_combined["Job Sector Percentage"], textinfo="label+percent", hole=.3)])
-    fig.update_layout(margin=dict(l=20, r=20, t=20, b=20))
-
-    return fig.to_json()
+  return fig.to_json()
 
 def top_jobs(df, city_id, n_industries = 10):
 
-    """
-    Returns list top job industries  for specific city_id 
-
-    ### Query Parameters: 
-
-    - `city_id`: [city_id], unique numeric mapping (ex: 0 returns Anchorage, AK)
-
-    ### Response
-
-    Dictionary object 
-
-    """
-
-    df = df
-    df_city_top10 = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[1:n_industries + 1]
-    df_city_other = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[n_industries + 1:]
+  df = df
+  df_city_top10 = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[1:n_industries + 1]
+  df_city_other = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[n_industries + 1:]
 
 
-    top_10_labels = df_city_top10["Job Sector"]
-    top_10_values = df_city_top10["Job Sector Percentage"]
+  top_10_labels = df_city_top10["Job Sector"]
+  top_10_values = df_city_top10["Job Sector Percentage"]
 
-    df_top10_aggregate = pd.DataFrame({"Job Sector": top_10_labels,
-                                        "Job Sector Percentage": top_10_values})
+  df_top10_aggregate = pd.DataFrame({"Job Sector": top_10_labels,
+                                     "Job Sector Percentage": top_10_values})
+  
+  df_city_other = pd.DataFrame({"Job Sector": ["Other"],
+                                "Job Sector Percentage": [100 - sum(top_10_values)]})
 
-    df_city_other = pd.DataFrame({"Job Sector": ["Other"],
-                                  "Job Sector Percentage": [100 - sum(top_10_values)]})
+  df_combined = pd.concat([df_top10_aggregate, df_city_other])
 
-    df_combined = pd.concat([df_top10_aggregate, df_city_other])
+  t = df_combined["all"] = df_combined["Job Sector"].astype(str)
 
-    t = df_combined["all"] = df_combined["Job Sector"].astype(str)
-
-    return t
+  return t
 
 def percentage(df, city_id, n_industries):
 
-    """
-    Returns percentage of each top job industries  for specific city_id 
-
-    ### Query Parameters: 
-
-    - `city_id`: [city_id], unique numeric mapping (ex: 0 returns Anchorage, AK)
-
-    ### Response
-
-    Dictionary object 
-    
-    """
-
-    df = df
-    df_city_top10 = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[1:n_industries + 1]
-    df_city_other = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[n_industries + 1:]
+  df = df
+  df_city_top10 = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[1:n_industries + 1]
+  df_city_other = df[ df["city_id"] == city_id].sort_values(by="Job Sector Percentage", ascending=False)[n_industries + 1:]
 
 
-    top_10_labels = df_city_top10["Job Sector"]
-    top_10_values = df_city_top10["Job Sector Percentage"]
+  top_10_labels = df_city_top10["Job Sector"]
+  top_10_values = df_city_top10["Job Sector Percentage"]
 
-    df_top10_aggregate = pd.DataFrame({"Job Sector": top_10_labels,
-                                        "Job Sector Percentage": top_10_values})
+  df_top10_aggregate = pd.DataFrame({"Job Sector": top_10_labels,
+                                     "Job Sector Percentage": top_10_values})
+  
+  df_city_other = pd.DataFrame({"Job Sector": ["Other"],
+                                "Job Sector Percentage": [100 - sum(top_10_values)]})
 
-    df_city_other = pd.DataFrame({"Job Sector": ["Other"],
-                                  "Job Sector Percentage": [100 - sum(top_10_values)]})
+  df_combined = pd.concat([df_top10_aggregate, df_city_other])
+  p = df_combined["all"] = (df_combined["Job Sector Percentage"].round(2)).astype(str) + "%"
 
-    df_combined = pd.concat([df_top10_aggregate, df_city_other])
-    p = df_combined["all"] = (df_combined["Job Sector Percentage"].round(2)).astype(str) + "%"
-
-    return p
+  return p
