@@ -68,9 +68,9 @@ See [Backend Documentation](https://github.com/labs26-citrics/Labs26-Citrics-DS-
 
 Clone the repo
 ```
-git clone https://github.com/YOUR-GITHUB-USERNAME/YOUR-REPO-NAME.git
+git clone https://github.com/labs26-citrics/Labs26-Citrics-DS-TeamB
 
-cd YOUR-REPO-NAME
+cd Labs26-Citrics-DS-TeamB
 ```
 
 Build the Docker image
