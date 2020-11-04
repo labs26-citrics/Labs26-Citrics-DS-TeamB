@@ -2,7 +2,7 @@
 
 A city metrics collation app to help find the perfect city for you!
 
-You can find the deployed project at [Citrics Team B](https://b.citrics.dev).
+You can find the deployed project at [Citrics DS Backend](https://citrics-ds.herokuapp.com/).
 
 ### Key Features
 
@@ -13,9 +13,8 @@ You can find the deployed project at [Citrics Team B](https://b.citrics.dev).
 
 #### [Walkthrough Video](https://youtu.be/ytG7onLqSOc)
 
-#### Front end deployed to `AWS Amplify`
+### Back end deployed to `Heroku`
 
-#### [Backend](https://b-ds.citrics.dev) built using FastAPI:
 
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
@@ -54,12 +53,10 @@ You can find the deployed project at [Citrics Team B](https://b.citrics.dev).
 
 # APIs
 
-## Google Places API
+## TODO: Describe APIS
 
-We used the [Google Places API](https://developers.google.com/places/web-service/photos) to dynamically retrieve the most appropriate cover images for each city in our database.
-
-## Backend APIs
-See [Backend Documentation](https://github.com/labs26-citrics/Labs26-Citrics-DS-TeamB) for more information on the APIs used by our Data Science team.
+## Frontend APIs
+See [Frontend Documentation](https://github.com/labs26-citrics/Labs26-Citrics-FE-TeamB) for more information on the APIs used by our Web team.
 
 
 ## Getting started
@@ -187,7 +184,7 @@ Remember that this project is licensed under the MIT license, and by submitting 
 
 ## Documentation
 
-See [Backend Documentation](https://b-ds.citrics.dev/#/) for details on the backend of our project.
+See [Frontend Documentation](https://github.com/labs26-citrics/Labs26-Citrics-FE-TeamB/blob/master/README.md) for details on the frontend of our project.
 
 # Labs DS template
 
